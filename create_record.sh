@@ -4,7 +4,7 @@ set -euo pipefail
 source .env
 
 
-read -p "Record name (e.g. www.domain.tld): " CUSTOMER_DNS
+read -p "Insert Customer-Domain (e.g. www.domain.tld): " CUSTOMER_DNS
 
 # Extract subdomain, domain and TLD from CUSTOMER_DNS
 IFS='.' read -r SUBDOMAIN DOMAIN TLD <<< "$CUSTOMER_DNS"
