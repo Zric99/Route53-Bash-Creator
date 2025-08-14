@@ -13,7 +13,8 @@ IFS='.' read -r SUBDOMAIN DOMAIN TLD <<< "$CUSTOMER_DNS"
 echo "Is the system multilingual?"
 echo "1) no"
 echo "2) yes"
-read -p "Please enter number (1 or 2): " MULTILINGUAL_OPTION
+read -p "Please enter number (1 or 2) [1 (no)]: " MULTILINGUAL_OPTION
+MULTILINGUAL_OPTION=${MULTILINGUAL_OPTION:-1}
 
 case "$MULTILINGUAL_OPTION" in
   1) MULTILINGUAL="no" ;;
@@ -31,7 +32,8 @@ if [[ "$MULTILINGUAL" == "yes" ]]; then
   echo "What type of system is it?"
   echo "1) Standard (live-production / cms / rms / preview)"
   echo "2) Staging"
-  read -p "Please enter number (1 or 2): " VARIANT_OPTION
+  read -p "Please enter number (1 or 2) [1 (standard)]: " VARIANT_OPTION
+  VARIANT_OPTION=${VARIANT_OPTION:-1}
 
   case "$VARIANT_OPTION" in
     1) VARIANT="multilanguage-standard" ;;
@@ -50,7 +52,8 @@ elif [[ "$MULTILINGUAL" == "no" ]]; then
   echo "Which variant is it?"
   echo "1) Standard (live-production / cms / rms / preview)"
   echo "2) Staging" 
-  read -p "Please enter number (1 or 2): " VARIANT_OPTION
+  read -p "Please enter number (1 or 2) [1 (standard)]: " VARIANT_OPTION
+  VARIANT_OPTION=${VARIANT_OPTION:-1}
 
   case "$VARIANT_OPTION" in
     1) VARIANT="standard" ;;
@@ -122,7 +125,9 @@ R53_RECORD_NAME="${R53_RECORD_NAME}${HOSTED_ZONE_DOMAIN}."
 echo "Choose the target for the alias record:"
 echo "1) $OPTION1"
 echo "2) $OPTION2"
-read -p "Please enter number (1 or 2): " TARGET_OPTION
+read -p "Please enter number (1 or 2) [1 ($OPTION1 )]: " TARGET_OPTION
+TARGET_OPTION=${TARGET_OPTION:-1}
+
 case "$TARGET_OPTION" in
   1) TARGET_DNS_NAME="$OPTION1" ;;
   2) TARGET_DNS_NAME="$OPTION2" ;;
@@ -145,7 +150,7 @@ aws route53 change-resource-record-sets \
     \"Changes\": [{
       \"Action\": \"CREATE\",
       \"ResourceRecordSet\": {
-        \"Name\": \"$RECORD_NAME\",
+        \"Name\": \"$R53_RECORD_NAME\",
         \"Type\": \"A\",
         \"AliasTarget\": {
             \"HostedZoneId\": \"${HOSTED_ZONE_ID}\",
@@ -171,8 +176,8 @@ for ((i=1; i<=ATTEMPTS; i++)); do
   echo "✅ Done: Record is INSYNC."
   # --- Prepare Outlook mail ---
   
-  MAIL_SUBJECT="New DNS record created: $RECORD_NAME"
-  MAIL_BODY="The following DNS record was created:\n\nRecord Name: $RECORD_NAME\nTarget DNS: $CUSTOMER_DNS\n\nPlease check."
+  MAIL_SUBJECT="New DNS record created: $R53_RECORD_NAME"
+  MAIL_BODY="The following DNS record was created:\n\nRecord Name: $R53_RECORD_NAME\nTarget DNS: $CUSTOMER_DNS\n\nPlease check."
   # AppleScript for Outlook
   osascript <<EOF
     tell application "Microsoft Outlook"
