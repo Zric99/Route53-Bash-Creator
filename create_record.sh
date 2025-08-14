@@ -1,20 +1,24 @@
 #!/bin/bash
-set -euo pipefail
+set -euxo pipefail
 
-source .env
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+  source "$SCRIPT_DIR/.env"
+fi
 
 
-read -p "Insert Customer-Domain (e.g. www.domain.tld): " CUSTOMER_DNS
+
+# Parameter: $1 = CUSTOMER_DNS, $2 = MULTILINGUAL_OPTION, $3 = VARIANT_OPTION, $4 = TARGET_OPTION
+CUSTOMER_DNS="$1"
+MULTILINGUAL_OPTION="$2"
+VARIANT_OPTION="$3"
+TARGET_OPTION="$4"
 
 # Extract subdomain, domain and TLD from CUSTOMER_DNS
 IFS='.' read -r SUBDOMAIN DOMAIN TLD <<< "$CUSTOMER_DNS"
 
 
-echo "Is the system multilingual?"
-echo "1) no"
-echo "2) yes"
-read -p "Please enter number (1 or 2) [1 (no)]: " MULTILINGUAL_OPTION
-MULTILINGUAL_OPTION=${MULTILINGUAL_OPTION:-1}
+
 
 case "$MULTILINGUAL_OPTION" in
   1) MULTILINGUAL="no" ;;
@@ -29,11 +33,7 @@ if [[ "$MULTILINGUAL" == "yes" ]]; then
     RECORD_NAME_TLD="$TLD"
   fi
   
-  echo "What type of system is it?"
-  echo "1) Standard (live-production / cms / rms / preview)"
-  echo "2) Staging"
-  read -p "Please enter number (1 or 2) [1 (standard)]: " VARIANT_OPTION
-  VARIANT_OPTION=${VARIANT_OPTION:-1}
+
 
   case "$VARIANT_OPTION" in
     1) VARIANT="multilanguage-standard" ;;
@@ -49,11 +49,7 @@ elif [[ "$MULTILINGUAL" == "no" ]]; then
   else
     RECORD_NAME_TLD="$TLD"
   fi
-  echo "Which variant is it?"
-  echo "1) Standard (live-production / cms / rms / preview)"
-  echo "2) Staging" 
-  read -p "Please enter number (1 or 2) [1 (standard)]: " VARIANT_OPTION
-  VARIANT_OPTION=${VARIANT_OPTION:-1}
+
 
   case "$VARIANT_OPTION" in
     1) VARIANT="standard" ;;
@@ -130,11 +126,7 @@ fi
 R53_RECORD_NAME="${R53_RECORD_NAME}${HOSTED_ZONE_DOMAIN}."
 
 
-echo "Choose the target for the alias record:"
-echo "1) $OPTION1"
-echo "2) $OPTION2"
-read -p "Please enter number (1 or 2) [1 ($OPTION1 )]: " TARGET_OPTION
-TARGET_OPTION=${TARGET_OPTION:-1}
+
 
 case "$TARGET_OPTION" in
   1) TARGET_DNS_NAME="$OPTION1" ;;
