@@ -55,7 +55,7 @@ elif [[ "$MULTILINGUAL" == "no" ]]; then
   case "$VARIANT_OPTION" in
     1) VARIANT="standard" ;;
     2) VARIANT="staging" ;;   
-  *) echo "Invalid selection!"; exit 1 ;;
+    *) echo "Invalid selection!"; exit 1 ;;
   esac
 fi
 
@@ -164,6 +164,7 @@ echo "⏳ Waiting for INSYNC ..."
 # Polling until INSYNC (max. ~5 minutes)
 ATTEMPTS=60
 SLEEP_SECONDS=5
+
 for ((i=1; i<=ATTEMPTS; i++)); do
   STATUS=$(aws route53 get-change --id "$CHANGE_ID" --query 'ChangeInfo.Status' --output text --no-cli-pager)
   if [[ "$STATUS" == "INSYNC" ]]; then
@@ -173,7 +174,7 @@ for ((i=1; i<=ATTEMPTS; i++)); do
   MAIL_SUBJECT="New DNS record created: $RECORD_NAME"
   MAIL_BODY="The following DNS record was created:\n\nRecord Name: $RECORD_NAME\nTarget DNS: $CUSTOMER_DNS\n\nPlease check."
   # AppleScript for Outlook
-    osascript <<EOF
+  osascript <<EOF
     tell application "Microsoft Outlook"
       set newMessage to make new outgoing message with properties {subject:"$MAIL_SUBJECT", content:"$MAIL_BODY"}
       open newMessage
@@ -190,4 +191,3 @@ echo
 echo "⚠️  Timeout: Status is still not INSYNC. Check manually with:"
 echo "    aws route53 get-change --id $CHANGE_ID"
 exit 1
-
