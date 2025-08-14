@@ -70,6 +70,8 @@ if [[ "$VARIANT" == "standard" ]]; then
 
   if [[ "$SUBDOMAIN" == cms* ]]; then
     R53_RECORD_NAME="cms.production.$DOMAIN"
+  elif [[ "$SUBDOMAIN" == rms* ]]; then
+    R53_RECORD_NAME="rms.production.$DOMAIN"
   elif [[ "$SUBDOMAIN" == preview* ]]; then
     R53_RECORD_NAME="web.preview.$DOMAIN"
   else
@@ -80,6 +82,8 @@ elif [[ "$VARIANT" == "staging" ]]; then
 
   if [[ "$SUBDOMAIN" == cms* ]]; then
     R53_RECORD_NAME="cms.staging.$DOMAIN"
+  elif [[ "$SUBDOMAIN" == rms* ]]; then
+    R53_RECORD_NAME="rms.staging.$DOMAIN"
   elif [[ "$SUBDOMAIN" == preview* ]]; then
     R53_RECORD_NAME="preview.staging.$DOMAIN"
   else
@@ -90,6 +94,8 @@ elif [[ "$VARIANT" == "multilanguage-standard" ]]; then
 
   if [[ "$SUBDOMAIN" == cms* ]]; then
     R53_RECORD_NAME="cms.$RECORD_NAME_TLD.production.$DOMAIN"
+  elif [[ "$SUBDOMAIN" == rms* ]]; then
+    R53_RECORD_NAME="rms.$RECORD_NAME_TLD.production.$DOMAIN"
   elif [[ "$SUBDOMAIN" == preview* ]]; then
   echo "Multilingual preview is currently not supported."
   exit 1
@@ -102,6 +108,8 @@ elif [[ "$VARIANT" == "multilanguage-standard" ]]; then
 # elif [[ "$VARIANT" == "multilanguage-staging" ]]; then
 #   if [[ "$SUBDOMAIN" == cms* ]]; then
 #     R53_RECORD_NAME="cms.$RECORD_NAME_TLD.staging.$DOMAIN"
+#   elif [[ "$SUBDOMAIN" == rms* ]]; then
+#     R53_RECORD_NAME="rms.$RECORD_NAME_TLD.staging.$DOMAIN"
 #   elif [[ "$SUBDOMAIN" == preview* ]]; then
 #     R53_RECORD_NAME="preview.$RECORD_NAME_TLD.staging.$DOMAIN"
 #   else
