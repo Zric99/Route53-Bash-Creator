@@ -4,12 +4,7 @@ set -euo pipefail
 source .env
 
 
-# Predefined target DNS names
-OPTION1="www.${HOSTED_ZONE_DOMAIN}"
-OPTION2="test.${HOSTED_ZONE_DOMAIN}"
-
-
-read -p "Record name (e.g. preview.wolftravel.de): " CUSTOMER_DNS
+read -p "Record name (e.g. www.domain.tld): " CUSTOMER_DNS
 
 # Extract subdomain, domain and TLD from CUSTOMER_DNS
 IFS='.' read -r SUBDOMAIN DOMAIN TLD <<< "$CUSTOMER_DNS"
