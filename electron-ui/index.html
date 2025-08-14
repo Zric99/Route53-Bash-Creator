@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Route53 Bash Creator UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+  <div class="bg-white shadow-2xl rounded-2xl p-10 w-full max-w-xl animate-fade-in">
+    <h1 class="text-3xl font-extrabold mb-8 text-center text-blue-700 tracking-tight drop-shadow">Route53 Bash Creator</h1>
+    <form id="recordForm" class="space-y-6">
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2" for="CUSTOMER_DNS">Record name</label>
+        <input type="text" name="CUSTOMER_DNS" id="CUSTOMER_DNS" placeholder="e.g. preview.wolftravel.de" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" required>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2" for="MULTILINGUAL_OPTION">Multilingual</label>
+        <select name="MULTILINGUAL_OPTION" id="MULTILINGUAL_OPTION" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          <option value="1">Not multilingual</option>
+          <option value="2">Multilingual</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2" for="VARIANT_OPTION">Variant</label>
+        <select name="VARIANT_OPTION" id="VARIANT_OPTION" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          <option value="1">Standard (live-production / cms / rms / preview)</option>
+          <option value="2">Staging</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2" for="TARGET_OPTION">Target</label>
+        <select name="TARGET_OPTION" id="TARGET_OPTION" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          <option value="1">Option 1</option>
+          <option value="2">Option 2</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 rounded-lg font-bold text-lg shadow hover:from-blue-700 hover:to-blue-500 transition">Create Record</button>
+    </form>
+    <div id="output" class="mt-8 text-base text-gray-800 whitespace-pre-line bg-gray-50 rounded-lg p-4 shadow-inner"></div>
+  </div>
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.7s cubic-bezier(.4,0,.2,1);
+    }
+  </style>
+  <script src="renderer.js"></script>
+</body>
+</html>

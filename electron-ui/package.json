@@ -1,0 +1,13 @@
+{
+  "name": "route53-bash-creator-ui",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "Modern Electron UI for create_record.sh",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "latest"
+  }
+}
