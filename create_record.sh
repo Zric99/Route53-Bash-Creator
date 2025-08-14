@@ -1,11 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi
+source .env
 
-##SETTINGS##
 
 # Predefined target DNS names
 OPTION1="www.${HOSTED_ZONE_DOMAIN}"
@@ -43,8 +40,8 @@ if [[ "$MULTILINGUAL" == "yes" ]]; then
 
   case "$VARIANT_OPTION" in
     1) VARIANT="multilanguage-standard" ;;
-  2) echo "Multilingual staging is currently not supported." ; exit 1 ;;
-  *) echo "Invalid selection!"; exit 1 ;;
+    2) echo "Multilingual staging is currently not supported." ; exit 1 ;;
+    *) echo "Invalid selection!"; exit 1 ;;
   esac
 
 
