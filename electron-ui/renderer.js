@@ -1,3 +1,12 @@
+// Setze Target-Dropdown-Werte nach Laden der Seite
+function setTargetDropdownValues() {
+  const hostedZoneDomain = window.electronAPI.getHostedZoneDomain();
+  document.getElementById('targetOpt1').textContent = `www.${hostedZoneDomain}`;
+  document.getElementById('targetOpt2').textContent = `${hostedZoneDomain}`;
+}
+
+window.addEventListener('hostedZoneDomainReady', setTargetDropdownValues);
+setTargetDropdownValues();
 document.getElementById('recordForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const form = e.target;
@@ -58,11 +67,16 @@ function updatePreview() {
     if (subdomain.startsWith('cms')) {
       r53RecordName = `cms.staging.${domain}`;
     } else if (subdomain.startsWith('rms')) {
+
+    // Target-Wert aus .env berechnen
+    let option1 = `www.${hostedZoneDomain}`;
+    let option2 = `${hostedZoneDomain}`;
+    let targetValue = form.TARGET_OPTION.value === '1' ? option1 : option2;
       r53RecordName = `rms.staging.${domain}`;
     } else if (subdomain.startsWith('preview')) {
       r53RecordName = `preview.staging.${domain}`;
     } else {
-      r53RecordName = `web.staging.${domain}`;
+    previewTarget.textContent = targetValue;
     }
   } else if (variant === 'multilanguage-standard') {
     if (subdomain.startsWith('cms')) {
