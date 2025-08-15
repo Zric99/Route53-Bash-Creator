@@ -35,9 +35,8 @@
           <option value="2" id="targetOpt2">Loading...</option>
         </select>
       </div>
-      <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 rounded-lg font-bold text-lg shadow hover:from-blue-700 hover:to-blue-500 transition">Create Record</button>
-    </form>
-      <div id="preview" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl shadow-inner text-gray-900">
+  </form>
+  <div id="preview" class="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl shadow-inner text-gray-900">
         <h2 class="text-xl font-bold mb-4 text-blue-700">Preview</h2>
         <div><b>Record name:</b> <span id="previewRecordName"></span></div>
         <div><b>Multilingual:</b> <span id="previewMultilingual"></span></div>
@@ -45,6 +44,7 @@
         <div><b>Target:</b> <span id="previewTarget"></span></div>
         <div class="mt-2 text-sm text-gray-600">Check all values before creating the record.</div>
       </div>
+    <button type="submit" form="recordForm" class="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-3 rounded-lg font-bold text-lg shadow hover:from-blue-700 hover:to-blue-500 transition mt-6">Create Record</button>
     <div id="output" class="mt-8 text-base text-gray-800 whitespace-pre-line bg-gray-50 rounded-lg p-4 shadow-inner"></div>
   </div>
   <style>
